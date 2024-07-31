@@ -1,8 +1,9 @@
 package com.vkBot.controller
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.vkBot.client.config.VkBotProperties
 import com.vkBot.service.VkBotService
-import com.vkBot.service.config.VkBotProperties
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,28 +17,35 @@ class VkBotController(
     private val vkBotService: VkBotService,
     private val vkBotProperties: VkBotProperties,
 ) {
+    private val log = LoggerFactory.getLogger(javaClass)
+
     @PostMapping
     fun handleVkCallback(
         @RequestBody request: VkRequest,
     ): ResponseEntity<String> {
-        println(request.`object`.toString())
-        if (request.type == "confirmation") return ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
-        if (request.type == "message_new") {
-            vkBotService.reply(request.`object`.message.text, request.`object`.message.userId)
-            return ResponseEntity.ok("")
+        return when (request.type) {
+            "confirmation" -> return ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
+            "message_new" ->
+                if (request.`object` != null) {
+                    vkBotService.reply(
+                        request.`object`.message.text,
+                        request.`object`.message.userId,
+                        request.`object`.message.messageId,
+                    )
+                    ResponseEntity.ok("")
+                } else {
+                    log.error("Invalid object: $request")
+                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid object")
+                }
+
+            else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unsupported request type")
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unsupported request type")
     }
 }
 
 data class VkRequest(
     val type: String,
-    val `object`: MessageField,
-)
-
-data class RequestError(
-    val errorCode: Int,
-    val errorMessage: String,
+    val `object`: MessageField?,
 )
 
 data class MessageField(
@@ -46,6 +54,9 @@ data class MessageField(
 )
 
 data class MessageDetails(
+    @JsonProperty("id")
+    val messageId: Int,
+    @JsonProperty("from_id")
     val userId: Int,
     val text: String,
 )

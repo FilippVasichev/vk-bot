@@ -1,7 +1,7 @@
 package com.vkBot.service
 
 import com.vkBot.client.VkBotApi
-import com.vkBot.service.config.VkBotProperties
+import com.vkBot.client.config.VkBotProperties
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -15,12 +15,13 @@ class VkBotService(
     fun reply(
         message: String,
         userId: Int,
+        messageId: Int,
     ) {
         runCatching {
             vkBotApi.sendMessage(
                 groupApiKey = vkBotProperties.groupApiKey,
                 userId = userId,
-                randomId = message.hashCode(),
+                randomId = messageId,
                 message = modifyMessage(message),
                 version = vkBotProperties.apiVersion,
             ).execute()
@@ -28,8 +29,9 @@ class VkBotService(
             val responseBody = response.body()
             if (responseBody?.get("error") == null) {
                 if (response.isSuccessful) log.info("Message sent successfully: $responseBody")
+            } else {
+                log.error("Failed to send message: ${responseBody.toPrettyString()}")
             }
-            else log.error("Failed to send message: ${responseBody.toPrettyString()}")
         }.onFailure { e ->
             log.warn("Failed to send message: $e")
         }

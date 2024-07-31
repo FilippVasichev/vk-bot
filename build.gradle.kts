@@ -21,6 +21,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    testImplementation("org.testcontainers:junit-jupiter:1.15.0")
+    testImplementation("org.mockserver:mockserver-client-java:5.11.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

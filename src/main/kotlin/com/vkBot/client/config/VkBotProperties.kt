@@ -1,4 +1,4 @@
-package com.vkBot.service.config
+package com.vkBot.client.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
