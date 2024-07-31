@@ -21,12 +21,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    testImplementation("org.testcontainers:junit-jupiter:1.15.0")
-    testImplementation("org.mockserver:mockserver-client-java:5.11.2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
+    testImplementation("org.mock-server:mockserver-testing:5.15.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mock-server:mockserver-client-java:5.15.0")
+    testImplementation("org.mock-server:mockserver-netty:5.15.0")
     testImplementation("io.rest-assured:rest-assured:5.3.2")
+    testImplementation("io.rest-assured:kotlin-extensions:5.3.2")
     testImplementation("io.rest-assured:json-path:5.3.2")
     testImplementation("io.rest-assured:xml-path:5.3.2")
 }
