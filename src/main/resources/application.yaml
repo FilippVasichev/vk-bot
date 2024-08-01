@@ -1,10 +1,10 @@
 vk:
-  callback-verification-code: "0993e807"
-  group-id: 226769621
-  group-api-key: vk1.a.cOweYGcYd1tLERcIvLe-brg1teZKnaEF6oLrm0oasgGsFBJ3BEZ71GpuysFe-LR8B2xymx45BnpXNThc-BCgKmCaXTe2gQY4xln1E1HNLZ4dGNNe7CbRIZjxUbZDfwVcyKq9ug71ZXkR_6LDVRgYX9Jky7KMkWhlDmfxwytMe55LA6G0j5lOl3l6kWIfdKJLT4av8R5lS98MwX7iRkhAyA
-  api-version: 5.199
-
+  baseUrl: "https://api.vk.com/method/"
 #  callback-varification-code: ${VERIFICATION_CODE}
 #  group-id: ${GROUP_ID}
 #  group-api-key: ${GROUP_API_KEY}
 #  api-version: ${API_VERSION}
+  callback-verification-code: "0993e807"
+  group-id: 226769621
+  group-api-key: vk1.a.cOweYGcYd1tLERcIvLe-brg1teZKnaEF6oLrm0oasgGsFBJ3BEZ71GpuysFe-LR8B2xymx45BnpXNThc-BCgKmCaXTe2gQY4xln1E1HNLZ4dGNNe7CbRIZjxUbZDfwVcyKq9ug71ZXkR_6LDVRgYX9Jky7KMkWhlDmfxwytMe55LA6G0j5lOl3l6kWIfdKJLT4av8R5lS98MwX7iRkhAyA
+  api-version: 5.199
