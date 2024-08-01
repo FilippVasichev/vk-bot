@@ -1,6 +1,6 @@
 vk:
   baseUrl: "https://api.vk.com/method/"
-#  callback-varification-code: ${VERIFICATION_CODE}
-#  group-id: ${GROUP_ID}
-#  group-api-key: ${GROUP_API_KEY}
-#  api-version: ${API_VERSION}
+  callback-varification-code: ${VERIFICATION_CODE}
+  group-id: ${GROUP_ID}
+  group-api-key: ${GROUP_API_KEY}
+  api-version: ${API_VERSION}
