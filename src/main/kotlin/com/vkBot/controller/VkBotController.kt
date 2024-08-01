@@ -24,20 +24,18 @@ class VkBotController(
         @RequestBody request: VkRequest,
     ): ResponseEntity<String> {
         return when (request.type) {
-            "confirmation" -> return ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
+            "confirmation" -> ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
             "message_new" ->
                 if (request.`object` != null) {
                     vkBotService.reply(
                         request.`object`.message.text,
                         request.`object`.message.userId,
                         request.`object`.message.messageId,
-                    )
-                    ResponseEntity.ok("")
+                    ).let { response -> ResponseEntity.ok(response.toString()) }
                 } else {
                     log.error("Invalid object: $request")
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid object")
                 }
-
             else -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unsupported request type")
         }
     }

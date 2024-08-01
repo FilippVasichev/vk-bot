@@ -28,7 +28,9 @@ class VkBotService(
         }.onSuccess { response ->
             val responseBody = response.body()
             if (responseBody?.get("error") == null) {
-                if (response.isSuccessful) log.info("Message sent successfully: $responseBody")
+                if (response.isSuccessful) {
+                    log.info("Message sent successfully: $responseBody")
+                }
             } else {
                 log.error("Failed to send message: ${responseBody.toPrettyString()}")
             }

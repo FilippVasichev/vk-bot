@@ -21,14 +21,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    testImplementation("org.mock-server:mockserver-testing:5.15.0")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mock-server:mockserver-client-java:5.15.0")
-    testImplementation("org.mock-server:mockserver-netty:5.15.0")
+    testImplementation("org.testcontainers:mockserver:1.20.1")
     testImplementation("io.rest-assured:rest-assured:5.3.2")
     testImplementation("io.rest-assured:kotlin-extensions:5.3.2")
     testImplementation("io.rest-assured:json-path:5.3.2")
     testImplementation("io.rest-assured:xml-path:5.3.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.test {
