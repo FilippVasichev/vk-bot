@@ -31,7 +31,8 @@ class VkBotController(
                         request.`object`.message.text,
                         request.`object`.message.userId,
                         request.`object`.message.messageId,
-                    ).let { response -> ResponseEntity.ok(response.toString()) }
+                    )
+                    ResponseEntity.ok("")
                 } else {
                     log.error("Invalid object: $request")
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid object")
