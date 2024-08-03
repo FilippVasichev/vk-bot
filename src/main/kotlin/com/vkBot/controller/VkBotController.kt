@@ -26,14 +26,10 @@ class VkBotController(
         return when (request.type) {
             "confirmation" -> ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
             "message_new" ->
-                if (request.`object` != null) {
-                    vkBotService.reply(
-                        request.`object`.message.text,
-                        request.`object`.message.userId,
-                        request.`object`.message.messageId,
-                    )
+                request.`object`?.let {
+                    vkBotService.reply(it.message.text, it.message.userId, it.message.messageId)
                     ResponseEntity.ok("")
-                } else {
+                } ?: run {
                     log.error("Invalid object: $request")
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid object")
                 }
