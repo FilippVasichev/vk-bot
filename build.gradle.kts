@@ -17,10 +17,13 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-aop:3.3.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
+    implementation("io.github.resilience4j:resilience4j-spring-boot3:2.2.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    testImplementation("org.amshove.kluent:kluent:1.73")
     testImplementation("org.mock-server:mockserver-client-java:5.15.0")
     testImplementation("org.testcontainers:mockserver:1.20.1")
     testImplementation("io.rest-assured:rest-assured:5.3.2")
