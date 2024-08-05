@@ -1,6 +1,13 @@
 vk:
   baseUrl: "https://api.vk.com/method/"
-  callback-varification-code: ${VERIFICATION_CODE}
+  callback-verification-code: ${VERIFICATION_CODE}
   group-id: ${GROUP_ID}
   group-api-key: ${GROUP_API_KEY}
   api-version: ${API_VERSION}
+
+resilience4j:
+  retry:
+    instances:
+      VkService:
+        maxAttempts: 3
+        waitDuration: 1000

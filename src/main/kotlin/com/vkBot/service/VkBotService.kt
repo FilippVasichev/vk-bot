@@ -2,42 +2,42 @@ package com.vkBot.service
 
 import com.vkBot.client.VkBotApi
 import com.vkBot.client.config.VkBotProperties
+import com.vkBot.controller.VkRequest
+import io.github.resilience4j.retry.annotation.Retry
 import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
+@Retry(name = "VkService")
 class VkBotService(
     private val vkBotApi: VkBotApi,
     private val vkBotProperties: VkBotProperties,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    fun reply(
-        message: String,
-        userId: Int,
-        messageId: Int,
-    ) {
-        runCatching {
+    fun reply(request: VkRequest) =
+        request.`object`?.message.let {
             vkBotApi.sendMessage(
                 groupApiKey = vkBotProperties.groupApiKey,
-                userId = userId,
-                randomId = messageId,
-                message = modifyMessage(message),
+                userId = it!!.userId,
+                randomId = it.messageId,
+                message = modifyMessage(it.text),
                 version = vkBotProperties.apiVersion,
-            ).execute()
-        }.onSuccess { response ->
-            val responseBody = response.body()
-            if (responseBody?.get("error") == null) {
-                if (response.isSuccessful) {
-                    log.info("Message sent successfully: $responseBody")
+            ).execute().let { response ->
+                if (!response.isSuccessful) {
+                    log.error("Failed to send a message: ${response.errorBody()}")
+                    throw RuntimeException("Connection failed with status code:" + response.code())
                 }
-            } else {
-                log.error("Failed to send message: ${responseBody.toPrettyString()}")
             }
-        }.onFailure { e ->
-            log.warn("Failed to send message: $e")
         }
-    }
+
+    fun handle(request: VkRequest): ResponseEntity<String> =
+        when (request.type) {
+            "confirmation" -> ResponseEntity.ok(vkBotProperties.callbackVerificationCode)
+            "message_new" -> reply(request).run { ResponseEntity.ok().build() }
+            else -> ResponseEntity.badRequest().build()
+        }
 
     private fun modifyMessage(message: String): String = "Вы сказали: $message"
 }

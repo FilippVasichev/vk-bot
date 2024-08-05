@@ -1,0 +1,13 @@
+vk:
+  baseUrl: "https://api.vk.com/method/"
+  callback-verification-code: "0993e807"
+  group-id: 22222222
+  group-api-key: vk1.a.cOqweweYGcYd1tLERcIvLe-brg1asteZKnaEF6oLrm0oasgGsFBJ3BEZ71Gp
+  api-version: 5.199
+
+resilience4j:
+  retry:
+    instances:
+      VkService:
+        maxAttempts: 3
+        waitDuration: 1000
