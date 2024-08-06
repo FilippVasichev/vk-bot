@@ -20,7 +20,10 @@ class VkBotService(
         when (request.type) {
             "confirmation" -> Result.success(vkBotProperties.callbackVerificationCode)
             "message_new" -> reply(request.`object`!!)
-            else -> Result.failure(IllegalArgumentException("Invalid object: $request"))
+            else -> {
+                log.error("Unsupported request type: ${request.type}")
+                Result.failure(IllegalArgumentException("Invalid object: $request"))
+            }
         }
 
     private fun reply(messageRequest: MessageField): Result<String> =

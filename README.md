@@ -32,7 +32,60 @@ vk:
 
 Для работы сервиса необходимо задать следующие переменные окружения:
 
-- `VERIFICATION_CODE` — Строка, которую должен вернуть сервер
-- `GROUP_ID` — Айди группы
-- `GROUP_API_KEY` — Ключ доступа сообщества
-- `API_VERSION` — Версия vk api
+- `CALLBACK_VERIFICATION_CODE` — код подтверждения для обработки запросов от Vk CallBack Api.
+- `GROUP_ID` — идентификатор группы в VK.
+- `GROUP_API_KEY` — ключ API для доступа к VK API.
+- `API_VERSION` — версия VK API.
+
+Пример команд для запуска контейнера с заданием этих переменных окружения:
+
+```
+docker run -d \
+  -e CALLBACK_VERIFICATION_CODE="111111111" \
+  -e GROUP_ID="11111111" \
+  -e GROUP_API_KEY="vk1.a.ваш токен" \
+  -e API_VERSION="5.199" \
+  -p 8080:8080 \
+  vk-bot-backend
+```
+
+## Получение ключей API и настройка
+
+- **VK API**: Для получения ключа доступа и других необходимых данных вам нужно зарегистрировать ваше приложение в [VK API](https://vk.com/dev).
+
+- **Получение ключа доступа**: [Инструкция по получению сервисного ключа доступа](https://dev.vk.com/ru/api/access-token/getting-started#%D0%A1%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BD%D1%8B%D0%B9%20%D0%9A%D0%BB%D1%8E%D1%87%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0)
+- **Версия API**: Используйте последнюю стабильную версию API. Актуальную версию можно найти в документации [VK API](https://dev.vk.com/ru/docs).
+
+- **Подключение Callback API**: Для настройки и использования Callback API следуйте [инструкциям по подключению Callback API](https://dev.vk.com/ru/api/callback/getting-started#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20Callback%20API).
+
+## Установка и запуск
+
+1. **Клонируйте репозиторий**:
+    ```
+    git clone git@github.com:FilippVasichev/vk-bot.git
+    ```
+
+2. **Перейдите в директорию проекта**:
+
+3. **Соберите проект**:
+    ```
+    ./gradlew clean build
+    ```
+
+4. **Создайте Docker-образ**:
+    ```
+    docker build -t vk-bot-backend .
+    ```
+
+5. **Запустите Docker-контейнер**:
+    ```
+    docker run  \
+    -e CALLBACK_VERIFICATION_CODE="111111111" \
+    -e GROUP_ID="11111111" \
+    -e GROUP_API_KEY="vk1.a.ваш токен" \
+    -e API_VERSION="5.199" \
+    -p 8080:8080 \
+    vk-bot-backend
+   
+   Запускает контейнер из созданного образа и маппит порт 8080 внутри контейнера на порт 8080 на хосте.
+    ```
