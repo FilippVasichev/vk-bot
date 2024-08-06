@@ -1,7 +1,6 @@
 package com.vkBot.controller
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.vkBot.client.config.VkBotProperties
 import com.vkBot.service.VkBotService
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -14,14 +13,21 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/")
 class VkBotController(
     private val vkBotService: VkBotService,
-    private val vkBotProperties: VkBotProperties,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @PostMapping
     fun handleVkCallback(
         @RequestBody request: VkRequest,
-    ): ResponseEntity<String> = vkBotService.handle(request)
+    ): ResponseEntity<String> =
+        vkBotService.handle(request).let { result ->
+            if (result.isSuccess) {
+                ResponseEntity.ok(result.getOrNull())
+            } else {
+                log.error("Unsupported request type: ${request.type}")
+                ResponseEntity.badRequest().build()
+            }
+        }
 }
 
 data class VkRequest(
