@@ -51,10 +51,7 @@ docker run -d \
 
 ## Получение ключей API и настройка
 
-- **VK API**: Для получения ключа доступа и других необходимых данных вам нужно зарегистрировать ваше приложение в [VK API](https://vk.com/dev).
-
 - **Получение ключа доступа**: [Инструкция по получению сервисного ключа доступа](https://dev.vk.com/ru/api/access-token/getting-started#%D0%A1%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BD%D1%8B%D0%B9%20%D0%9A%D0%BB%D1%8E%D1%87%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0)
-- **Версия API**: Используйте последнюю стабильную версию API. Актуальную версию можно найти в документации [VK API](https://dev.vk.com/ru/docs).
 
 - **Подключение Callback API**: Для настройки и использования Callback API следуйте [инструкциям по подключению Callback API](https://dev.vk.com/ru/api/callback/getting-started#%D0%9F%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20Callback%20API).
 
